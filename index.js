@@ -121,46 +121,46 @@ const addToMap = (filter = () => true) => {
 };
 
 const overlayS2Labels = s2CellCount => {
-  const s2Cells = L.featureGroup(
-    s2latLngs.map(({ s2Cell, topleft }) =>
-      L.marker(topleft, {
-        icon: L.divIcon({
-          className: "s2-label",
-          html: s2CellCount[s2Cell] ? s2Cell : ""
-        })
-      })
-    )
-  );
+  // const s2Cells = L.featureGroup(
+    // s2latLngs.map(({ s2Cell, topleft }) =>
+      // L.marker(topleft, {
+        // icon: L.divIcon({
+          // className: "s2-label",
+          // html: s2CellCount[s2Cell] ? s2Cell : ""
+        // })
+      // })
+    // )
+  // );
 
-  const counts = L.featureGroup(
-    s2latLngs.map(({ s2Cell, topright }) =>
-      L.marker(topright, {
-        icon: L.divIcon({
-          className: "s2-label s2-count",
-          html: s2CellCount[s2Cell] ? s2CellCount[s2Cell].count : ""
-        })
-      })
-    )
-  );
+  // const counts = L.featureGroup(
+    // s2latLngs.map(({ s2Cell, topright }) =>
+      // L.marker(topright, {
+        // icon: L.divIcon({
+          // className: "s2-label s2-count",
+          // html: s2CellCount[s2Cell] ? s2CellCount[s2Cell].count : ""
+        // })
+      // })
+    // )
+  // );
 
-  const totals = L.featureGroup(
-    s2latLngs.map(({ s2Cell, bottomleft }) =>
-      L.marker(bottomleft, {
-        icon: L.divIcon({
-          className: "s2-label s2-total",
-          html: s2CellCount[s2Cell] ? s2CellCount[s2Cell].total : ""
-        })
-      })
-    )
-  );
+  // const totals = L.featureGroup(
+    // s2latLngs.map(({ s2Cell, bottomleft }) =>
+      // L.marker(bottomleft, {
+        // icon: L.divIcon({
+          // className: "s2-label s2-total",
+          // html: s2CellCount[s2Cell] ? s2CellCount[s2Cell].total : ""
+        // })
+      // })
+    // )
+  // );
 
   s2LayerGroup.clearLayers();
   s2CountsLayerGroup.clearLayers();
   s2TotalsLayerGroup.clearLayers();
   s2LayerGroup.addLayer(s2PolygonLayer);
-  s2LayerGroup.addLayer(s2Cells);
-  s2CountsLayerGroup.addLayer(counts);
-  s2TotalsLayerGroup.addLayer(totals);
+  //s2LayerGroup.addLayer(s2Cells);
+  //s2CountsLayerGroup.addLayer(counts);
+  //s2TotalsLayerGroup.addLayer(totals);
 };
 
 fetchLocal(
@@ -195,20 +195,20 @@ fetchLocal(
     )
   )
   .then(data => {
-    s2latLngs = data.features.map(feature => ({
-      topleft: [feature.coordinates[0][3][1], feature.coordinates[0][3][0]],
-      topright: [feature.coordinates[0][2][1], feature.coordinates[0][2][0]],
-      bottomright: [feature.coordinates[0][1][1], feature.coordinates[0][1][0]],
-      bottomleft: [feature.coordinates[0][0][1], feature.coordinates[0][0][0]],
-      s2Cell: feature.properties.order
-    }));
+    // s2latLngs = data.features.map(feature => ({
+      // topleft: [feature.coordinates[0][3][1], feature.coordinates[0][3][0]],
+      // topright: [feature.coordinates[0][2][1], feature.coordinates[0][2][0]],
+      // bottomright: [feature.coordinates[0][1][1], feature.coordinates[0][1][0]],
+      // bottomleft: [feature.coordinates[0][0][1], feature.coordinates[0][0][0]],
+      // s2Cell: feature.properties.order
+    // }));
     s2PolygonLayer.addData(data);
 
     L.control
       .layers(null, {
-        "S2 cells L12 grid": s2LayerGroup,
+        "S2 cells L12 grid": s2LayerGroup/*,
         "Locations per cell (red)": s2CountsLayerGroup,
-        "Total raids per cell (blue)": s2TotalsLayerGroup
+        "Total raids per cell (blue)": s2TotalsLayerGroup*/
       })
       .addTo(map);
   });

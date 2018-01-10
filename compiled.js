@@ -116,54 +116,54 @@ var addToMap = function addToMap() {
 };
 
 var overlayS2Labels = function overlayS2Labels(s2CellCount) {
-  var s2Cells = L.featureGroup(s2latLngs.map(function (_ref) {
-    var s2Cell = _ref.s2Cell,
-        topleft = _ref.topleft;
-    return L.marker(topleft, {
-      icon: L.divIcon({
-        className: "s2-label",
-        html: s2CellCount[s2Cell] ? s2Cell : ""
-      })
-    });
-  }));
+  // const s2Cells = L.featureGroup(
+  // s2latLngs.map(({ s2Cell, topleft }) =>
+  // L.marker(topleft, {
+  // icon: L.divIcon({
+  // className: "s2-label",
+  // html: s2CellCount[s2Cell] ? s2Cell : ""
+  // })
+  // })
+  // )
+  // );
 
-  var counts = L.featureGroup(s2latLngs.map(function (_ref2) {
-    var s2Cell = _ref2.s2Cell,
-        topright = _ref2.topright;
-    return L.marker(topright, {
-      icon: L.divIcon({
-        className: "s2-label s2-count",
-        html: s2CellCount[s2Cell] ? s2CellCount[s2Cell].count : ""
-      })
-    });
-  }));
+  // const counts = L.featureGroup(
+  // s2latLngs.map(({ s2Cell, topright }) =>
+  // L.marker(topright, {
+  // icon: L.divIcon({
+  // className: "s2-label s2-count",
+  // html: s2CellCount[s2Cell] ? s2CellCount[s2Cell].count : ""
+  // })
+  // })
+  // )
+  // );
 
-  var totals = L.featureGroup(s2latLngs.map(function (_ref3) {
-    var s2Cell = _ref3.s2Cell,
-        bottomleft = _ref3.bottomleft;
-    return L.marker(bottomleft, {
-      icon: L.divIcon({
-        className: "s2-label s2-total",
-        html: s2CellCount[s2Cell] ? s2CellCount[s2Cell].total : ""
-      })
-    });
-  }));
+  // const totals = L.featureGroup(
+  // s2latLngs.map(({ s2Cell, bottomleft }) =>
+  // L.marker(bottomleft, {
+  // icon: L.divIcon({
+  // className: "s2-label s2-total",
+  // html: s2CellCount[s2Cell] ? s2CellCount[s2Cell].total : ""
+  // })
+  // })
+  // )
+  // );
 
   s2LayerGroup.clearLayers();
   s2CountsLayerGroup.clearLayers();
   s2TotalsLayerGroup.clearLayers();
   s2LayerGroup.addLayer(s2PolygonLayer);
-  s2LayerGroup.addLayer(s2Cells);
-  s2CountsLayerGroup.addLayer(counts);
-  s2TotalsLayerGroup.addLayer(totals);
+  //s2LayerGroup.addLayer(s2Cells);
+  //s2CountsLayerGroup.addLayer(counts);
+  //s2TotalsLayerGroup.addLayer(totals);
 };
 
 fetchLocal("https://cdn.rawgit.com/GizzlySGD/be115bd8f1ae79ae87c6492c5a504860/raw/81ec39e73a15a5e36280a9b2b75d82a8e4e2309c/gyms.geojson").then(function (data) {
-  var _ref4, _ref5;
+  var _ref, _ref2;
 
   gyms = data;
 
-  terrains = (_ref4 = []).concat.apply(_ref4, _toConsumableArray(gyms.features.map(function (feature) {
+  terrains = (_ref = []).concat.apply(_ref, _toConsumableArray(gyms.features.map(function (feature) {
     return feature.properties.terrains;
   })));
   terrains = terrains.filter(function (item, pos) {
@@ -172,7 +172,7 @@ fetchLocal("https://cdn.rawgit.com/GizzlySGD/be115bd8f1ae79ae87c6492c5a504860/ra
     return moment(b) - moment(a);
   });
 
-  dates = (_ref5 = []).concat.apply(_ref5, _toConsumableArray(gyms.features.map(function (feature) {
+  dates = (_ref2 = []).concat.apply(_ref2, _toConsumableArray(gyms.features.map(function (feature) {
     return feature.properties.dates;
   })));
   dates = dates.filter(function (item, pos) {
@@ -189,21 +189,19 @@ fetchLocal("https://cdn.rawgit.com/GizzlySGD/be115bd8f1ae79ae87c6492c5a504860/ra
 }).then(function () {
   return fetchLocal("https://cdn.rawgit.com/GizzlySGD/33cc9bf8befe075d7d8bf28af2ec6143/raw/1fc141c056c51ae45f491aa777af7b2a21cb6d04/s2_lvl12_cells.geojson");
 }).then(function (data) {
-  s2latLngs = data.features.map(function (feature) {
-    return {
-      topleft: [feature.coordinates[0][3][1], feature.coordinates[0][3][0]],
-      topright: [feature.coordinates[0][2][1], feature.coordinates[0][2][0]],
-      bottomright: [feature.coordinates[0][1][1], feature.coordinates[0][1][0]],
-      bottomleft: [feature.coordinates[0][0][1], feature.coordinates[0][0][0]],
-      s2Cell: feature.properties.order
-    };
-  });
+  // s2latLngs = data.features.map(feature => ({
+  // topleft: [feature.coordinates[0][3][1], feature.coordinates[0][3][0]],
+  // topright: [feature.coordinates[0][2][1], feature.coordinates[0][2][0]],
+  // bottomright: [feature.coordinates[0][1][1], feature.coordinates[0][1][0]],
+  // bottomleft: [feature.coordinates[0][0][1], feature.coordinates[0][0][0]],
+  // s2Cell: feature.properties.order
+  // }));
   s2PolygonLayer.addData(data);
 
   L.control.layers(null, {
-    "S2 cells L12 grid": s2LayerGroup,
-    "Locations per cell (red)": s2CountsLayerGroup,
-    "Total raids per cell (blue)": s2TotalsLayerGroup
+    "S2 cells L12 grid": s2LayerGroup /*,
+                                      "Locations per cell (red)": s2CountsLayerGroup,
+                                      "Total raids per cell (blue)": s2TotalsLayerGroup*/
   }).addTo(map);
 });
 
