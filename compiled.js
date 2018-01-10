@@ -35,7 +35,7 @@ var renderPopup = function renderPopup(layer) {
     exraidHTML += "<div>No EX-raid yet</div>";
   }
 
-  return "\n    <strong>\n    " + feature.properties.name + "\n    </strong>\n    " + exraidHTML + "\n    <div>S2 Cell: " + feature.properties.s2Cell + "</div>\n    <br/>\n    <div>\n      <a target=\"_blank\" href=\"\n      https://www.google.com/maps/search/?api=1&query=" + lngLat[1] + "," + lngLat[0] + "\n      \">\n        Google Maps\n      </a>\n    </div>\n    <br/>\n    <div>\n      <a target=\"_blank\" href=\"\n      https://sgpokemap.com/gym.html#" + lngLat[1] + "," + lngLat[0] + "\n      \">\n        SGPokemap\n      </a>\n    </div>\n    ";
+  return "\n    <strong>\n    " + feature.properties.name + "\n    </strong>\n    " + exraidHTML + "\n    <div>S2 Cell: " + feature.properties.s2Cell + "</div>\n    <br/>\n    <div>\n      <a target=\"_blank\" href=\"\n      https://www.google.com/maps/search/?api=1&query=" + lngLat[1] + "," + lngLat[0] + "\n      \">\n        Google Maps\n      </a>\n    </div>\n    ";
 };
 
 var markers = L.markerClusterGroup({
@@ -46,7 +46,7 @@ var markers = L.markerClusterGroup({
   spiderfyOnMaxZoom: false
 });
 var map = L.map("map", {
-  center: [1.358, 103.833],
+  center: [51.049580, 13.737963],
   zoom: 12,
   minZoom: 10
 }).on("overlayadd", function () {
@@ -158,7 +158,7 @@ var overlayS2Labels = function overlayS2Labels(s2CellCount) {
   s2TotalsLayerGroup.addLayer(totals);
 };
 
-fetchLocal("https://cdn.rawgit.com/xiankai/fc4260e305d1339756a3e1a02b495939/raw/be1b87fdaac080b760117340051d08bcbcfe8b6b/all.geojson").then(function (data) {
+fetchLocal("https://cdn.rawgit.com/GizzlySGD/be115bd8f1ae79ae87c6492c5a504860/raw/81ec39e73a15a5e36280a9b2b75d82a8e4e2309c/gyms.geojson").then(function (data) {
   var _ref4, _ref5;
 
   gyms = data;
@@ -187,7 +187,7 @@ fetchLocal("https://cdn.rawgit.com/xiankai/fc4260e305d1339756a3e1a02b495939/raw/
 
   return Promise.resolve();
 }).then(function () {
-  return fetchLocal("https://cdn.rawgit.com/xiankai/0f2af25f0cd91d16cb59f846fa2bde36/raw/de48c7b21d497265f2254260bccd6cd464442139/S2.geojson");
+  return fetchLocal("https://cdn.rawgit.com/GizzlySGD/33cc9bf8befe075d7d8bf28af2ec6143/raw/1fc141c056c51ae45f491aa777af7b2a21cb6d04/s2_lvl12_cells.geojson");
 }).then(function (data) {
   s2latLngs = data.features.map(function (feature) {
     return {

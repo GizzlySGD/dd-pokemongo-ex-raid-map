@@ -42,14 +42,6 @@ const renderPopup = layer => {
         Google Maps
       </a>
     </div>
-    <br/>
-    <div>
-      <a target="_blank" href="
-      https://sgpokemap.com/gym.html#${lngLat[1]},${lngLat[0]}
-      ">
-        SGPokemap
-      </a>
-    </div>
     `;
 };
 
@@ -61,7 +53,7 @@ const markers = L.markerClusterGroup({
   spiderfyOnMaxZoom: false
 });
 const map = L.map("map", {
-  center: [1.358, 103.833],
+  center: [51.049580, 13.737963],
   zoom: 12,
   minZoom: 10
 }).on("overlayadd", () => {
@@ -172,7 +164,7 @@ const overlayS2Labels = s2CellCount => {
 };
 
 fetchLocal(
-  "https://cdn.rawgit.com/xiankai/fc4260e305d1339756a3e1a02b495939/raw/be1b87fdaac080b760117340051d08bcbcfe8b6b/all.geojson"
+  "https://cdn.rawgit.com/GizzlySGD/be115bd8f1ae79ae87c6492c5a504860/raw/81ec39e73a15a5e36280a9b2b75d82a8e4e2309c/gyms.geojson"
 )
   .then(data => {
     gyms = data;
@@ -199,7 +191,7 @@ fetchLocal(
   })
   .then(() =>
     fetchLocal(
-      "https://cdn.rawgit.com/xiankai/0f2af25f0cd91d16cb59f846fa2bde36/raw/de48c7b21d497265f2254260bccd6cd464442139/S2.geojson"
+      "https://cdn.rawgit.com/GizzlySGD/33cc9bf8befe075d7d8bf28af2ec6143/raw/1fc141c056c51ae45f491aa777af7b2a21cb6d04/s2_lvl12_cells.geojson"
     )
   )
   .then(data => {
