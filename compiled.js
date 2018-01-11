@@ -59,6 +59,7 @@ var dates = [];
 var currentFilter = "raids";
 var s2LocationCountLayer = L.featureGroup();
 var s2TotaRaidsLayer = L.featureGroup();
+var exRaidLocationLayer = L.geoJSON();
 var s2PolygonLayer = L.geoJSON();
 var s2LayerGroup = L.featureGroup([s2PolygonLayer]);
 var s2CountsLayerGroup = L.featureGroup();
@@ -158,7 +159,7 @@ var overlayS2Labels = function overlayS2Labels(s2CellCount) {
   //s2TotalsLayerGroup.addLayer(totals);
 };
 
-fetchLocal("https://cdn.rawgit.com/GizzlySGD/be115bd8f1ae79ae87c6492c5a504860/raw/fe97815cb711ea382ca0f1a4bff213020ab1fdc9/gyms.geojson").then(function (data) {
+fetchLocal("https://cdn.rawgit.com/GizzlySGD/be115bd8f1ae79ae87c6492c5a504860/raw/3dbd3477a7374e8ff53ede50a44a55fa79a9bc48/gyms.geojson").then(function (data) {
   var _ref, _ref2;
 
   gyms = data;
@@ -197,9 +198,15 @@ fetchLocal("https://cdn.rawgit.com/GizzlySGD/be115bd8f1ae79ae87c6492c5a504860/ra
   // s2Cell: feature.properties.order
   // }));
   s2PolygonLayer.addData(data);
-
+}).then(function () {
+  return fetchLocal("https://cdn.rawgit.com/GizzlySGD/de490e290420430bbcf75f4f5ce3eef0/raw/630b9c6ea1ce0ba1e07290a8f53de53104aa51bf/exraidlocations.geojson");
+}).then(function (data) {
+	
+  exRaidLocationLayer.addData(data);
+  
   L.control.layers(null, {
-    "S2 cells L12 grid": s2LayerGroup /*,
+    "S2 cells L12 grid": s2LayerGroup,
+	"Ex Raid Locations": exRaidLocationLayer	/*,
                                       "Locations per cell (red)": s2CountsLayerGroup,
                                       "Total raids per cell (blue)": s2TotalsLayerGroup*/
   }).addTo(map);

@@ -66,6 +66,7 @@ let dates = [];
 let currentFilter = "raids";
 const s2LocationCountLayer = L.featureGroup();
 const s2TotaRaidsLayer = L.featureGroup();
+const exRaidLocationLayer = L.geoJSON();
 const s2PolygonLayer = L.geoJSON();
 const s2LayerGroup = L.featureGroup([s2PolygonLayer]);
 const s2CountsLayerGroup = L.featureGroup();
@@ -164,7 +165,7 @@ const overlayS2Labels = s2CellCount => {
 };
 
 fetchLocal(
-  "https://cdn.rawgit.com/GizzlySGD/be115bd8f1ae79ae87c6492c5a504860/raw/fe97815cb711ea382ca0f1a4bff213020ab1fdc9/gyms.geojson"
+  "https://cdn.rawgit.com/GizzlySGD/be115bd8f1ae79ae87c6492c5a504860/raw/3dbd3477a7374e8ff53ede50a44a55fa79a9bc48/gyms.geojson"
 )
   .then(data => {
     gyms = data;
@@ -195,18 +196,27 @@ fetchLocal(
     )
   )
   .then(data => {
-    // s2latLngs = data.features.map(feature => ({
+	// s2latLngs = data.features.map(feature => ({
       // topleft: [feature.coordinates[0][3][1], feature.coordinates[0][3][0]],
       // topright: [feature.coordinates[0][2][1], feature.coordinates[0][2][0]],
       // bottomright: [feature.coordinates[0][1][1], feature.coordinates[0][1][0]],
       // bottomleft: [feature.coordinates[0][0][1], feature.coordinates[0][0][0]],
       // s2Cell: feature.properties.order
     // }));
-    s2PolygonLayer.addData(data);
-
+		s2PolygonLayer.addData(data);
+	}).then(() =>
+		fetchLocal(
+			"https://cdn.rawgit.com/GizzlySGD/de490e290420430bbcf75f4f5ce3eef0/raw/630b9c6ea1ce0ba1e07290a8f53de53104aa51bf/exraidlocations.geojson"
+		)
+	)
+	.then(data => {
+	
+	exRaidLocationLayer.addData(data);
+ 
     L.control
       .layers(null, {
-        "S2 cells L12 grid": s2LayerGroup/*,
+        "S2 cells L12 grid": s2LayerGroup,
+		"Ex Raid Locations": exRaidLocationLayer/*,
         "Locations per cell (red)": s2CountsLayerGroup,
         "Total raids per cell (blue)": s2TotalsLayerGroup*/
       })
