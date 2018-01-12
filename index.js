@@ -49,13 +49,13 @@ const markers = L.markerClusterGroup({
   maxClusterRadius: () => {
     return currentFilter === "raids" ? 0 : 80;
   },
-  disableClusteringAtZoom: 14,
+  disableClusteringAtZoom: 13,
   spiderfyOnMaxZoom: false
 });
 const map = L.map("map", {
   center: [51.049580, 13.737963],
   zoom: 12,
-  minZoom: 10
+  minZoom: 11
 }).on("overlayadd", () => {
   $("#secondary-group > .active > input").trigger("change");
 });
@@ -165,7 +165,7 @@ const overlayS2Labels = s2CellCount => {
 };
 
 fetchLocal(
-  "https://cdn.rawgit.com/GizzlySGD/be115bd8f1ae79ae87c6492c5a504860/raw/3dbd3477a7374e8ff53ede50a44a55fa79a9bc48/gyms.geojson"
+  "https://cdn.rawgit.com/GizzlySGD/be115bd8f1ae79ae87c6492c5a504860/raw/5397e30e2e25713372791b173128d709ceacd6fe/gyms.geojson"
 )
   .then(data => {
     gyms = data;
@@ -215,8 +215,8 @@ fetchLocal(
  
     L.control
       .layers(null, {
-        "S2 cells L12 grid": s2LayerGroup,
-		"Ex Raid Locations": exRaidLocationLayer/*,
+        "S2 cells L12 grid": s2LayerGroup/*,
+		"Ex Raid Locations": exRaidLocationLayer,
         "Locations per cell (red)": s2CountsLayerGroup,
         "Total raids per cell (blue)": s2TotalsLayerGroup*/
       })
