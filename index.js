@@ -49,7 +49,7 @@ const markers = L.markerClusterGroup({
   maxClusterRadius: () => {
     return currentFilter === "raids" ? 0 : 80;
   },
-  disableClusteringAtZoom: 13,
+  disableClusteringAtZoom: 12,
   spiderfyOnMaxZoom: false
 });
 const map = L.map("map", {
@@ -75,7 +75,7 @@ const s2TotalsLayerGroup = L.featureGroup();
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   // L.tileLayer("http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png", {
   attribution:
-    '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors | <a href="https://goo.gl/forms/jVQOTAdsE9KdGIe52" target="_blank">Missing raid location?</a>'
+    '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors | <a href="https://github.com/xiankai/sg-pokemongo-ex-raid-map" target="_blank">Originalversion</a> | <a href="https://goo.gl/forms/YmxCvOkTCH03lZ8J3" target="_blank">Fehlt ein Ex-Raid?</a>'
 }).addTo(map);
 
 L.control.locate().addTo(map);
@@ -231,7 +231,8 @@ $("#primary-group").on("change", 'input[type="radio"]', e => {
   switch (e.target.value) {
     case "raids":
       key = "dates";
-      defaultButton = dates[dates.length - 1];
+      defaultButton = "all"; 
+	  //defaultButton = dates[dates.length - 1];
 
       dates.forEach(date => {
         $("#secondary-group").prepend(`
@@ -255,7 +256,7 @@ $("#primary-group").on("change", 'input[type="radio"]', e => {
       break;
     case "parks":
       key = "terrains";
-      defaultButton = "2016-08-01";
+      defaultButton = "2016-07-10";
       addToMap(
         feature =>
           feature.properties[key] &&

@@ -42,7 +42,7 @@ var markers = L.markerClusterGroup({
   maxClusterRadius: function maxClusterRadius() {
     return currentFilter === "raids" ? 0 : 80;
   },
-  disableClusteringAtZoom: 13,
+  disableClusteringAtZoom: 12,
   spiderfyOnMaxZoom: false
 });
 var map = L.map("map", {
@@ -67,8 +67,7 @@ var s2TotalsLayerGroup = L.featureGroup();
 
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   // L.tileLayer("http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png", {
-  attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
-  //attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors | <a href="https://goo.gl/forms/jVQOTAdsE9KdGIe52" target="_blank">Missing raid location?</a>'
+  attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors | <a href="https://github.com/xiankai/sg-pokemongo-ex-raid-map" target="_blank">Originalversion</a> | <a href="https://goo.gl/forms/YmxCvOkTCH03lZ8J3" target="_blank">Fehlt ein Ex-Raid?</a>'
 }).addTo(map);
 
 L.control.locate().addTo(map);
@@ -202,12 +201,12 @@ fetchLocal("https://cdn.rawgit.com/GizzlySGD/be115bd8f1ae79ae87c6492c5a504860/ra
 }).then(function () {
   return fetchLocal("https://cdn.rawgit.com/GizzlySGD/de490e290420430bbcf75f4f5ce3eef0/raw/630b9c6ea1ce0ba1e07290a8f53de53104aa51bf/exraidlocations.geojson");
 }).then(function (data) {
-	
+
   exRaidLocationLayer.addData(data);
-  
+
   L.control.layers(null, {
-    "S2 cells L12 grid": s2LayerGroup/*,
-	"Ex Raid Locations": exRaidLocationLayer	,
+    "S2 cells L12 grid": s2LayerGroup /*,
+                                      "Ex Raid Locations": exRaidLocationLayer,
                                       "Locations per cell (red)": s2CountsLayerGroup,
                                       "Total raids per cell (blue)": s2TotalsLayerGroup*/
   }).addTo(map);
@@ -221,7 +220,8 @@ $("#primary-group").on("change", 'input[type="radio"]', function (e) {
   switch (e.target.value) {
     case "raids":
       key = "dates";
-      defaultButton = dates[dates.length - 1];
+      defaultButton = "all";
+      //defaultButton = dates[dates.length - 1];
 
       dates.forEach(function (date) {
         $("#secondary-group").prepend("\n          <label class=\"btn btn-secondary\" for=\"" + date + "\">\n            <input type=\"radio\" name=\"" + key + "\" id=\"" + date + "\" value=\"" + date + "\">\n            " + moment(date).format("D MMM") + "\n          </label>\n        ");
@@ -235,7 +235,7 @@ $("#primary-group").on("change", 'input[type="radio"]', function (e) {
       break;
     case "parks":
       key = "terrains";
-      defaultButton = "2016-08-01";
+      defaultButton = "2016-07-10";
       addToMap(function (feature) {
         return feature.properties[key] && feature.properties[key].indexOf(defaultButton) > -1;
       });
