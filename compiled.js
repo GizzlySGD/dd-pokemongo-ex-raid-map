@@ -26,10 +26,10 @@ var renderPopup = function renderPopup(layer) {
 
   var exraidHTML = "";
   if (dates && dates.length > 0) {
-    exraidHTML += "<div>EX-raids:<ul>";
     dates.forEach(function (date) {
-      exraidHTML += "<li>" + moment(date).format("D MMM") + "</li>";
+      exraidHTML = "<li>" + moment(date).format("D MMM") + "</li>" + exraidHTML;
     });
+    exraidHTML = "<div>EX-raids:<ul>" + exraidHTML;
     exraidHTML += "</ul></div>";
   } else {
     exraidHTML += "<div>No EX-raid yet</div>";
@@ -54,6 +54,7 @@ var map = L.map("map", {
 });
 var gyms = void 0;
 var s2latLngs = void 0;
+var searchControl = new L.Control.Search();
 var terrains = [];
 var dates = [];
 var currentFilter = "raids";
@@ -112,6 +113,22 @@ var addToMap = function addToMap() {
 
   markers.clearLayers();
   markers.addLayer(layer).bindPopup(renderPopup, { autoPanPaddingTopLeft: [100, 100] });
+
+  // add markers to search control
+  map.removeControl(searchControl);
+  searchControl = new L.Control.Search({
+    layer: markers,
+    propertyName: "name",
+    initial: false,
+    hideMarkerOnCollapse: true,
+    zoom: 14
+    // moveToLocation: (latlng, title, map) => {
+    //   map.panTo(latlng);
+    //   markers.openPopup(L.latLng(latlng.lat, latlng.lng));
+    // },
+  });
+  map.addControl(searchControl);
+
   map.addLayer(markers);
   return markers;
 };
@@ -179,9 +196,8 @@ fetchLocal("https://cdn.rawgit.com/GizzlySGD/be115bd8f1ae79ae87c6492c5a504860/ra
   dates = dates.filter(function (item, pos) {
     return item && dates.indexOf(item) === pos;
   }).sort(function (a, b) {
-    return moment(b) - moment(a);
+    return moment(a) - moment(b);
   });
-  dates.reverse();
 
   // show submenu at start
   $('#primary-group [value="raids"]').trigger("change");
@@ -207,7 +223,7 @@ fetchLocal("https://cdn.rawgit.com/GizzlySGD/be115bd8f1ae79ae87c6492c5a504860/ra
   L.control.layers(null, {
     "S2 cells L12 grid": s2LayerGroup /*,
                                       "Ex Raid Locations": exRaidLocationLayer,
-                                      "Locations per cell (red)": s2CountsLayerGroup,
+    "Locations per cell (red)": s2CountsLayerGroup,
                                       "Total raids per cell (blue)": s2TotalsLayerGroup*/
   }).addTo(map);
 });
@@ -244,7 +260,7 @@ $("#primary-group").on("change", 'input[type="radio"]', function (e) {
       $("#secondary-group").append("\n        <label class=\"btn btn-light\" disabled>\n          Map date\n        </label>\n      ");
 
       terrains.forEach(function (terrain) {
-        $("#secondary-group").append("\n          <label class=\"btn btn-secondary\" for=\"" + terrain + "\">\n            <input type=\"radio\" name=\"" + key + "\" id=\"" + terrain + "\" value=\"" + terrain + "\"\n              " + (terrain === defaultButton ? "checked" : "") + ">\n            " + moment(terrain).format("MMM YYYY") + "\n          </label>\n        ");
+        $("#secondary-group").append("\n          <label class=\"btn btn-secondary\" for=\"" + terrain + "\">\n            <input type=\"radio\" name=\"" + key + "\" id=\"" + terrain + "\" value=\"" + terrain + "\"\n              " + (terrain === defaultButton ? "checked" : "") + ">\n            " + terrain + "\n          </label>\n        ");
       });
       break;
   }

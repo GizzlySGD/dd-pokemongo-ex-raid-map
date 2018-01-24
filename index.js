@@ -19,10 +19,10 @@ const renderPopup = layer => {
 
   let exraidHTML = "";
   if (dates && dates.length > 0) {
-    exraidHTML += "<div>EX-raids:<ul>";
     dates.forEach(date => {
-      exraidHTML += "<li>" + moment(date).format("D MMM") + "</li>";
+      exraidHTML = "<li>" + moment(date).format("D MMM") + "</li>" + exraidHTML;
     });
+    exraidHTML = "<div>EX-raids:<ul>" + exraidHTML;
     exraidHTML += "</ul></div>";
   } else {
     exraidHTML += "<div>No EX-raid yet</div>";
@@ -61,6 +61,7 @@ const map = L.map("map", {
 });
 let gyms;
 let s2latLngs;
+let searchControl = new L.Control.Search();
 let terrains = [];
 let dates = [];
 let currentFilter = "raids";
@@ -117,6 +118,22 @@ const addToMap = (filter = () => true) => {
   markers
     .addLayer(layer)
     .bindPopup(renderPopup, { autoPanPaddingTopLeft: [100, 100] });
+
+  // add markers to search control
+  map.removeControl(searchControl);
+  searchControl = new L.Control.Search({
+    layer: markers,
+    propertyName: "name",
+    initial: false,
+    hideMarkerOnCollapse: true,
+    zoom: 14
+    // moveToLocation: (latlng, title, map) => {
+    //   map.panTo(latlng);
+    //   markers.openPopup(L.latLng(latlng.lat, latlng.lng));
+    // },
+  });
+  map.addControl(searchControl);
+
   map.addLayer(markers);
   return markers;
 };
@@ -182,8 +199,7 @@ fetchLocal(
     );
     dates = dates
       .filter((item, pos) => item && dates.indexOf(item) === pos)
-      .sort((a, b) => moment(b) - moment(a));
-    dates.reverse();
+      .sort((a, b) => moment(a) - moment(b));
 
     // show submenu at start
     $('#primary-group [value="raids"]').trigger("change");
@@ -203,7 +219,7 @@ fetchLocal(
       // bottomleft: [feature.coordinates[0][0][1], feature.coordinates[0][0][0]],
       // s2Cell: feature.properties.order
     // }));
-		s2PolygonLayer.addData(data);
+    s2PolygonLayer.addData(data);
 	}).then(() =>
 		fetchLocal(
 			"https://cdn.rawgit.com/GizzlySGD/de490e290420430bbcf75f4f5ce3eef0/raw/630b9c6ea1ce0ba1e07290a8f53de53104aa51bf/exraidlocations.geojson"
@@ -212,7 +228,7 @@ fetchLocal(
 	.then(data => {
 	
 	exRaidLocationLayer.addData(data);
- 
+
     L.control
       .layers(null, {
         "S2 cells L12 grid": s2LayerGroup/*,
@@ -275,7 +291,7 @@ $("#primary-group").on("change", 'input[type="radio"]', e => {
           <label class="btn btn-secondary" for="${terrain}">
             <input type="radio" name="${key}" id="${terrain}" value="${terrain}"
               ${terrain === defaultButton ? "checked" : ""}>
-            ${moment(terrain).format("MMM YYYY")}
+            ${terrain}
           </label>
         `);
       });
