@@ -20,6 +20,7 @@ const renderPopup = layer => {
   let exraidHTML = "";
   if (dates && dates.length > 0) {
     dates.forEach(date => {
+		debugger;
       exraidHTML = "<li>" + moment(date).format("D MMM") + "</li>" + exraidHTML;
     });
     exraidHTML = "<div>EX-raids:<ul>" + exraidHTML;
@@ -182,7 +183,7 @@ const overlayS2Labels = s2CellCount => {
 };
 
 fetchLocal(
-  "https://cdn.rawgit.com/GizzlySGD/be115bd8f1ae79ae87c6492c5a504860/raw/f0e7ea680f62938d3d4d959827607d93b8776375/gyms.geojson"
+  "https://cdn.rawgit.com/GizzlySGD/be115bd8f1ae79ae87c6492c5a504860/raw/ea4483f30f544431bfabddbef3f1eda10d46c326/gyms.geojson"
 )
   .then(data => {
     gyms = data;

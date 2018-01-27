@@ -27,6 +27,7 @@ var renderPopup = function renderPopup(layer) {
   var exraidHTML = "";
   if (dates && dates.length > 0) {
     dates.forEach(function (date) {
+      debugger;
       exraidHTML = "<li>" + moment(date).format("D MMM") + "</li>" + exraidHTML;
     });
     exraidHTML = "<div>EX-raids:<ul>" + exraidHTML;
@@ -176,7 +177,7 @@ var overlayS2Labels = function overlayS2Labels(s2CellCount) {
   //s2TotalsLayerGroup.addLayer(totals);
 };
 
-fetchLocal("https://cdn.rawgit.com/GizzlySGD/be115bd8f1ae79ae87c6492c5a504860/raw/f0e7ea680f62938d3d4d959827607d93b8776375/gyms.geojson").then(function (data) {
+fetchLocal("https://cdn.rawgit.com/GizzlySGD/be115bd8f1ae79ae87c6492c5a504860/raw/ea4483f30f544431bfabddbef3f1eda10d46c326/gyms.geojson").then(function (data) {
   var _ref, _ref2;
 
   gyms = data;
@@ -223,7 +224,7 @@ fetchLocal("https://cdn.rawgit.com/GizzlySGD/be115bd8f1ae79ae87c6492c5a504860/ra
   L.control.layers(null, {
     "S2 cells L12 grid": s2LayerGroup /*,
                                       "Ex Raid Locations": exRaidLocationLayer,
-    "Locations per cell (red)": s2CountsLayerGroup,
+                                      "Locations per cell (red)": s2CountsLayerGroup,
                                       "Total raids per cell (blue)": s2TotalsLayerGroup*/
   }).addTo(map);
 });
