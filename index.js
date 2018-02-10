@@ -183,7 +183,7 @@ const overlayS2Labels = s2CellCount => {
 };
 
 fetchLocal(
-  "https://cdn.rawgit.com/GizzlySGD/be115bd8f1ae79ae87c6492c5a504860/raw/979f326e3110530e57ff8a3993bf1159b2395505/gyms.geojson"
+  "https://cdn.rawgit.com/GizzlySGD/be115bd8f1ae79ae87c6492c5a504860/raw/3cbb6d67f595d6c493d3b18590a151a09ecfdf28/gyms.geojson"
 )
   .then(data => {
     gyms = data;
@@ -209,7 +209,7 @@ fetchLocal(
   })
   .then(() =>
     fetchLocal(
-      "https://cdn.rawgit.com/GizzlySGD/33cc9bf8befe075d7d8bf28af2ec6143/raw/1fc141c056c51ae45f491aa777af7b2a21cb6d04/s2_lvl12_cells.geojson"
+      "https://cdn.rawgit.com/GizzlySGD/fadda2bb33aab912b545d13509130666/raw/b77f0c03253204cb51349f761cd05824fcf73d59/map.geojson"
     )
   )
   .then(data => {
@@ -232,7 +232,7 @@ fetchLocal(
 
     L.control
       .layers(null, {
-        "S2 cells L12 grid": s2LayerGroup/*,
+        "S2 cells L13 grid": s2LayerGroup/*,
 		"Ex Raid Locations": exRaidLocationLayer,
         "Locations per cell (red)": s2CountsLayerGroup,
         "Total raids per cell (blue)": s2TotalsLayerGroup*/
