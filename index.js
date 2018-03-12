@@ -223,7 +223,7 @@ fetchLocal(
     s2PolygonLayer.addData(data);
 	}).then(() =>
 		fetchLocal(
-			"https://cdn.rawgit.com/GizzlySGD/de490e290420430bbcf75f4f5ce3eef0/raw/630b9c6ea1ce0ba1e07290a8f53de53104aa51bf/exraidlocations.geojson"
+			"https://cdn.rawgit.com/GizzlySGD/76da1f3b3d661b014582dd104d9f7695/raw/be45a5b8f78ff3e3286cde0c1d578bf5b59b1f13/map.geojson"
 		)
 	)
 	.then(data => {
@@ -232,8 +232,8 @@ fetchLocal(
 
     L.control
       .layers(null, {
-        "S2 cells L13 grid": s2LayerGroup/*,
-		"Ex Raid Locations": exRaidLocationLayer,
+        "S2 cells L13 grid": s2LayerGroup,
+		"Stadtteile": exRaidLocationLayer/*,
         "Locations per cell (red)": s2CountsLayerGroup,
         "Total raids per cell (blue)": s2TotalsLayerGroup*/
       })

@@ -216,14 +216,14 @@ fetchLocal("https://cdn.rawgit.com/GizzlySGD/be115bd8f1ae79ae87c6492c5a504860/ra
   // }));
   s2PolygonLayer.addData(data);
 }).then(function () {
-  return fetchLocal("https://cdn.rawgit.com/GizzlySGD/de490e290420430bbcf75f4f5ce3eef0/raw/630b9c6ea1ce0ba1e07290a8f53de53104aa51bf/exraidlocations.geojson");
+  return fetchLocal("https://cdn.rawgit.com/GizzlySGD/76da1f3b3d661b014582dd104d9f7695/raw/be45a5b8f78ff3e3286cde0c1d578bf5b59b1f13/map.geojson");
 }).then(function (data) {
 
   exRaidLocationLayer.addData(data);
 
   L.control.layers(null, {
-    "S2 cells L13 grid": s2LayerGroup /*,
-                                      "Ex Raid Locations": exRaidLocationLayer,
+    "S2 cells L13 grid": s2LayerGroup,
+    "Stadtteile": exRaidLocationLayer /*,
                                       "Locations per cell (red)": s2CountsLayerGroup,
                                       "Total raids per cell (blue)": s2TotalsLayerGroup*/
   }).addTo(map);
